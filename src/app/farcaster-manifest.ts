@@ -33,7 +33,7 @@ export const farcasterManifest: Manifest = {
       `${appUrl}/screenshots/Screenshot-3.png`,
     ],
     primaryCategory: "finance",
-    tags: ["defi", "bridge", "cross-chain", "tokens", "lifi", "ethereum", "blockchain"],
+    tags: ["defi", "bridge", "cross-chain", "tokens", "ethereum", "blockchain"],
     heroImageUrl: `${appUrl}/lifi-hero-1200x630.png`,
     tagline: "Bridge tokens across chains",
     ogTitle: "LiFi Bridge - Cross-Chain",
