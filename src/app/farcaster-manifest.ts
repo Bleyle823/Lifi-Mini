@@ -30,18 +30,18 @@ export const farcasterManifest: Manifest = {
     screenshotUrls: [
       `${appUrl}/icon-512x512.png`,
       `${appUrl}/icon-192x192.png`,
-      `${appUrl}/football-hero-1200x630.png`,
-      `${appUrl}/football-icon-1024x1024.png`,
+      `${appUrl}/lifi-hero-1200x630.png`,
+      `${appUrl}/lifi-icon-1024x1024.png`,
       `${appUrl}/splash-image-200x200.png`,
     ],
     primaryCategory: "finance",
     tags: ["defi", "bridge", "cross-chain", "tokens", "lifi", "ethereum", "blockchain"],
-    heroImageUrl: `${appUrl}/football-hero-1200x630.png`,
+    heroImageUrl: `${appUrl}/lifi-hero-1200x630.png`,
     tagline: "Bridge tokens across chains seamlessly",
     ogTitle: "LiFi Bridge - Cross-Chain Token Bridge",
     ogDescription:
       "Fast and secure cross-chain token transfers powered by LiFi's advanced routing technology.",
-    ogImageUrl: `${appUrl}/football-hero-1200x630.png`,
+    ogImageUrl: `${appUrl}/lifi-hero-1200x630.png`,
     noindex: false,
     requiredCapabilities: [
       "wallet.getEthereumProvider",
