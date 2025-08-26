@@ -9,10 +9,10 @@ const appUrl = getBaseUrl();
 // Docs
 // https://miniapps.farcaster.xyz/docs/guides/publishing#host-a-manifest-file
 export const farcasterManifest: Manifest = {
-   accountAssociation: {
-    "header": "eyJmaWQiOjY3NDc5MiwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDdENjI4NDE4NjEyNzU0OWUxODgzRjMwMUM0MjU5MTBGMzYxOUUyNTQifQ",
-    "payload": "eyJkb21haW4iOiJsaWZpLW1pbmkudmVyY2VsLmFwcCJ9",
-    "signature": "MHhhYjZkODUwOTQ5NDYxN2Y2ZTA5ZTdlNDYzZGRjMGFmNjczMTllYjYxNTdmODA5MzI1ZjdjNjljMzVhOWY5ZmEyMWM5ZjkyNDhhODk0NTUzMzMzMTEyNTUzMzg3YjA1NzI1Mzk0NmJkMGNhNjA4YjFhODhkNDQ2N2UzNjI2NDFkYzFj"
+  accountAssociation: {
+    header: "eyJmaWQiOjY3NDc5MiwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDdENjI4NDE4NjEyNzU0OWUxODgzRjMwMUM0MjU5MTBGMzYxOUUyNTQifQ",
+    payload: "eyJkb21haW4iOiJsaWZpLW1pbmkudmVyY2VsLmFwcCJ9",
+    signature: "MHhhYjZkODUwOTQ5NDYxN2Y2ZTA5ZTdlNDYzZGRjMGFmNjczMTllYjYxNTdmODA5MzI1ZjdjNjljMzVhOWY5ZmEyMWM5ZjkyNDhhODk0NTUzMzMzMTEyNTUzMzg3YjA1NzI1Mzk0NmJkMGNhNjA4YjFhODhkNDQ2N2UzNjI2NDFkYzFj"
   },
   frame: {
     version: "1",
@@ -61,4 +61,5 @@ export const farcasterManifest: Manifest = {
     // castShareUrl
   },
 };
+
 
