@@ -1,7 +1,9 @@
 import { useSyncExternalStore } from 'react'
 
 function subscribe() {
-  return () => {}
+  return () => {
+    // No-op cleanup function
+  }
 }
 
 /**
