@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "@farcaster/frame-sdk": "^0.0.60",
+    "@lifi/sdk": "^3.10.1",
+    "@lifi/widget": "^3.28.0",
     "@t3-oss/env-nextjs": "^0.13.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
