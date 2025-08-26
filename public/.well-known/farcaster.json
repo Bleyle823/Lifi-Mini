@@ -1,0 +1,20 @@
+{
+  "frame": {
+    "name": "LiFi Bridge",
+    "version": "1",
+    "iconUrl": "https://lifi-mini.vercel.app/icon-512x512.png",
+    "homeUrl": "https://lifi-mini.vercel.app/farcaster",
+    "imageUrl": "https://lifi-mini.vercel.app/icon-512x512.png",
+    "splashImageUrl": "https://lifi-mini.vercel.app/icon-192x192.png",
+    "splashBackgroundColor": "#0F172A",
+    "webhookUrl": "https://lifi-mini.vercel.app/api/webhook",
+    "subtitle": "Cross-chain bridge for seamless token transfers",
+    "description": "Bridge tokens across multiple blockchains with LiFi's advanced routing technology. Fast, secure, and cost-effective cross-chain transfers.",
+    "primaryCategory": "finance"
+  },
+  "accountAssociation": {
+    "header": "eyJmaWQiOjI5MjE5NCwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDcyNTU0QTIyNEI0Qjc1Njk2OTdBYWQ1ZUE1YmQ1NzM5ZDAxQzliYzMifQ",
+    "payload": "eyJkb21haW4iOiJ0ZW1wbGF0ZS5nYWlhcy54eXoifQ",
+    "signature": "MHg0N2YwYzJlZDQ3ZTMwODZiMGVmYjk3ZmQwYWM5NGQxZjk3Mjg4NDg0NTc3MjY4Yjg4Yzk4MjAyODlmMTI4MjkzMGZiNmExYTdhN2IxYWJlMmQxMzNjMDE1YTQ0Y2FkNWU5M2NiNmRiNmZhYzFjNDcyNjI5NDAwZTk5YmExODNiNjFi"
+  }
+}
