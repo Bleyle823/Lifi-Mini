@@ -9,13 +9,13 @@ const appUrl = getBaseUrl();
 // Docs
 // https://miniapps.farcaster.xyz/docs/guides/publishing#host-a-manifest-file
 export const farcasterManifest: Manifest = {
-  accountAssociation: {
-    header:
-      "eyJmaWQiOjI5MjE5NCwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDcyNTU0QTIyNEI0Qjc1Njk2OTdBYWQ1ZUE1YmQ1NzM5ZDAxQzliYzMifQ",
-    payload: "eyJkb21haW4iOiJ0ZW1wbGF0ZS5nYWlhcy54eXoifQ",
-    signature:
-      "MHg0N2YwYzJlZDQ3ZTMwODZiMGVmYjk3ZmQwYWM5NGQxZjk3Mjg4NDg0NTc3MjY4Yjg4Yzk4MjAyODlmMTI4MjkzMGZiNmExYTdhN2IxYWJlMmQxMzNjMDE1YTQ0Y2FkNWU5M2NiNmRiNmZhYzFjNDcyNjI5NDAwZTk5YmExODNiNjFi",
+  {
+  "accountAssociation": {
+    "header": "eyJmaWQiOjY3NDc5MiwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDdENjI4NDE4NjEyNzU0OWUxODgzRjMwMUM0MjU5MTBGMzYxOUUyNTQifQ",
+    "payload": "eyJkb21haW4iOiJsaWZpLW1pbmkudmVyY2VsLmFwcCJ9",
+    "signature": "MHhhYjZkODUwOTQ5NDYxN2Y2ZTA5ZTdlNDYzZGRjMGFmNjczMTllYjYxNTdmODA5MzI1ZjdjNjljMzVhOWY5ZmEyMWM5ZjkyNDhhODk0NTUzMzMzMTEyNTUzMzg3YjA1NzI1Mzk0NmJkMGNhNjA4YjFhODhkNDQ2N2UzNjI2NDFkYzFj"
   },
+}
   frame: {
     version: "1",
     name: "LiFi Bridge",
@@ -63,4 +63,5 @@ export const farcasterManifest: Manifest = {
     // castShareUrl
   },
 };
+
 
