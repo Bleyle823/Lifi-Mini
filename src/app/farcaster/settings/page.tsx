@@ -5,6 +5,7 @@ import {
 import { SafeArea } from "@/app/farcaster/components/safe-area";
 import { TopNavbar, topNavHeight } from "@/app/farcaster/components/top-navbar";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Page() {
   return (
@@ -13,9 +14,18 @@ export default function Page() {
       <main className="flex-1 overflow-auto">
         <div className="container mx-auto px-4 py-6">
           <div className="max-w-2xl mx-auto">
-            <h1 className="text-2xl font-bold mb-6 text-center text-gray-900">
-              Bridge Settings
-            </h1>
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <Image
+                src="/lifi-icon-1024x1024.png"
+                alt="Lifi Logo"
+                width={32}
+                height={32}
+                className="w-8 h-8"
+              />
+              <h1 className="text-2xl font-bold text-gray-900">
+                Bridge Settings
+              </h1>
+            </div>
             
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 space-y-6">
               <div className="space-y-4">
