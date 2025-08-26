@@ -1,7 +1,6 @@
-import { PwaProviders } from "@/app/pwa/providers";
 import "@/styles/globals.css";
 
-import { type Metadata, type Viewport } from "next";
+import type { Metadata, Viewport } from "next";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -12,8 +11,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "PWA Template",
-  description: "PWA template for Next.js",
+  title: "Lifi Mini",
+  description: "Root app layout for Lifi Mini",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
   appleWebApp: {
     capable: true,
@@ -33,9 +32,9 @@ export default function RootLayout({
       className="overscroll-none [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       suppressHydrationWarning
     >
-      <body className="overscroll-none">
-        <PwaProviders>{children}</PwaProviders>
-      </body>
+      <body className="overscroll-none">{children}</body>
     </html>
   );
 }
+
+
