@@ -14,7 +14,7 @@ const frame = {
     action: {
       type: "launch_frame",
       url: `${appUrl}/farcaster`,
-      name: "Farcaster Mini App Example",
+      name: "LiFi Bridge - Cross-Chain Token Bridge",
     },
   },
 };
@@ -30,8 +30,8 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Farcaster Mini App Template",
-  description: "Farcaster Mini App template for Next.js",
+  title: "LiFi Bridge - Cross-Chain Token Bridge",
+  description: "Bridge tokens across multiple blockchains with LiFi's advanced routing technology. Fast, secure, and cost-effective cross-chain transfers.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
   appleWebApp: {
     capable: true,
