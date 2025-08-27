@@ -2,7 +2,7 @@
 
 import { BottomNavbarWrapper } from "@/app/farcaster/components/bottom-navbar-wrapper";
 import { cn } from "@/lib/utils";
-import { CircleUser, CogIcon, HomeIcon, InfoIcon } from "lucide-react";
+import { CircleUser, HomeIcon, InfoIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -10,7 +10,6 @@ const navRoutes = [
   "/farcaster",
   "/farcaster/about",
   "/farcaster/profile",
-  "/farcaster/settings",
 ] as const;
 
 type NavRoutes = (typeof navRoutes)[number];
@@ -38,11 +37,6 @@ const navSetup: Record<
     isActive: ["/farcaster/profile"],
     icon: <CircleUser className="size-6" />,
   },
-  "/farcaster/settings": {
-    name: "Settings",
-    isActive: ["/farcaster/settings"],
-    icon: <CogIcon className="size-6" />,
-  },
 } as const;
 
 export const bottomNavHeight = "calc(4rem + 1px)";
@@ -52,7 +46,7 @@ export function BottomNavbar() {
 
   return (
     <BottomNavbarWrapper>
-      <nav className="max-w-global flex h-full w-full items-center justify-evenly">
+      <nav className="max-w-global flex h-full w-full items-center justify-evenly bg-white/95 backdrop-blur-sm border-t border-gray-100">
         {navRoutes.map((route, index) => {
           const activeRoutes = navSetup[route].isActive;
 
@@ -63,12 +57,26 @@ export function BottomNavbar() {
               key={`bottom-navbar-link-${route}-${index}`}
               href={route}
               className={cn(
-                "hover:bg-muted flex h-full flex-1 flex-col items-center justify-center overflow-hidden",
-                isActive && "underline",
+                "group flex h-full flex-1 flex-col items-center justify-center overflow-hidden transition-all duration-200 ease-in-out rounded-lg mx-1 my-2",
+                "hover:bg-gradient-to-r hover:from-purple-50 hover:to-blue-50 hover:scale-105 hover:shadow-sm",
+                isActive 
+                  ? "bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 shadow-sm" 
+                  : "text-gray-600 hover:text-purple-600"
               )}
             >
-              {navSetup[route].icon}
-              <div className="text-xs">{navSetup[route].name}</div>
+              <div className={cn(
+                "transition-transform duration-200 ease-in-out",
+                "group-hover:scale-110",
+                isActive && "scale-110"
+              )}>
+                {navSetup[route].icon}
+              </div>
+              <div className={cn(
+                "text-xs font-medium mt-1 transition-all duration-200",
+                isActive && "font-semibold"
+              )}>
+                {navSetup[route].name}
+              </div>
             </Link>
           );
         })}
