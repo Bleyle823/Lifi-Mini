@@ -18,7 +18,7 @@ export const FloatingNav = ({
   return (
     <motion.div
               className={cn(
-          "flex max-w-3xl fixed top-6 inset-x-0 mx-auto border border-white/20 dark:border-white/10 rounded-2xl dark:bg-black/20 bg-white/20 backdrop-blur-md shadow-2xl z-[5000] px-8 py-4 items-center justify-between",
+          "flex max-w-3xl fixed top-6 inset-x-0 mx-auto border border-white/30 dark:border-white/20 rounded-2xl dark:bg-black/30 bg-white/30 backdrop-blur-xl shadow-2xl z-[5000] px-8 py-4 items-center justify-between",
           className
         )}
     >
