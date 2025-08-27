@@ -1,11 +1,45 @@
 import { SafeArea } from "@/app/farcaster/components/safe-area";
-import { TopNavbar, topNavHeight } from "@/app/farcaster/components/top-navbar";
+import { FloatingNav } from "@/components/ui/floating-navbar";
+import { IconHome, IconExchange, IconTerminal2, IconNewSection, IconBrandGithub, IconBrandX } from "@tabler/icons-react";
 import Link from "next/link";
 
 export default function Page() {
+  const navItems = [
+    {
+      name: "Home",
+      link: "/farcaster",
+      icon: <IconHome className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    },
+    {
+      name: "Bridge",
+      link: "/farcaster/about",
+      icon: <IconExchange className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    },
+    {
+      name: "Products",
+      link: "/farcaster/profile",
+      icon: <IconTerminal2 className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    },
+    {
+      name: "Components",
+      link: "/farcaster/settings",
+      icon: <IconNewSection className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    },
+    {
+      name: "GitHub",
+      link: "https://github.com/lifinance",
+      icon: <IconBrandGithub className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    },
+    {
+      name: "Twitter",
+      link: "https://twitter.com/lifiprotocol",
+      icon: <IconBrandX className="h-4 w-4 text-neutral-500 dark:text-white" />,
+    },
+  ];
+
   return (
-    <SafeArea {...{ topNavHeight }}>
-      <TopNavbar />
+    <SafeArea {...{ topNavHeight: "calc(6rem + 1px)" }}>
+      <FloatingNav navItems={navItems} />
       <main className="flex-1 overflow-auto">
         <div className="container mx-auto px-4 py-6">
           <div className="max-w-2xl mx-auto">
