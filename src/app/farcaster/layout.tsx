@@ -8,7 +8,7 @@ const appUrl = getBaseUrl();
 
 const frame = {
   version: "next",
-  imageUrl: `${appUrl}/embed.png`,
+  imageUrl: `${appUrl}/lifi-hero-1200x630.png`,
   button: {
     title: "Start",
     action: {

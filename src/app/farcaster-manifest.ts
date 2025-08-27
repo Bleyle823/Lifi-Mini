@@ -19,7 +19,7 @@ export const farcasterManifest: Manifest = {
     name: "LiFi Bridge",
     homeUrl: `${appUrl}/farcaster`,
     iconUrl: `${appUrl}/icon-512x512.png`,
-    splashImageUrl: `https://imgur.com/a/uTdFyRO`,
+    splashImageUrl: `${appUrl}/splash-image-200x200.png`,
     splashBackgroundColor: "#0F172A",
     // webhookUrl: "https://api.example.com/webhook/farcaster",
     subtitle: "Cross-chain bridge",
