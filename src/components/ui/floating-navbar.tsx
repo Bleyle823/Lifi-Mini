@@ -5,14 +5,8 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 export const FloatingNav = ({
-  navItems,
   className,
 }: {
-  navItems: {
-    name: string;
-    link: string;
-    icon?: React.ReactNode;
-  }[];
   className?: string;
 }) => {
   return (
