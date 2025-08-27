@@ -40,10 +40,10 @@ const FloatingDockMobile = ({
     <div className={cn("relative block md:hidden", className)}>
       <AnimatePresence>
         {open && (
-          <motion.div
-            layoutId="nav"
-            className="absolute inset-x-0 bottom-full mb-2 flex flex-col gap-2"
-          >
+                      <motion.div
+              layoutId="nav"
+              className="absolute inset-x-0 bottom-full mb-2 flex flex-row gap-2 justify-center"
+            >
             {items.map((item, idx) => (
               <motion.div
                 key={item.title}
