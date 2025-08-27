@@ -1,7 +1,7 @@
 "use client";
 
 import { TopNavbarWrapper } from "@/app/farcaster/components/top-navbar-wrapper";
-import { ThemeAwareLogo } from "@/components/ThemeAwareLogo";
+import Image from "next/image";
 
 export const topNavHeight = "calc(4rem + 1px)";
 
@@ -10,15 +10,17 @@ export function TopNavbar() {
     <TopNavbarWrapper>
       <div className="max-w-global z-50 flex h-full w-full items-center justify-between">
         <div className="flex items-center gap-2">
-          <ThemeAwareLogo
-            width={100}
+          <Image
+            src="/lifi-icon-1024x1024.png"
+            alt="Lifi Logo"
+            width={24}
             height={24}
-            className="h-6"
-            alt="LiFi Logo"
+            className="w-6 h-6"
           />
+          <span className="text-lg font-semibold text-gray-900">LiFi Bridge</span>
         </div>
         <div className="flex items-center space-x-2">
-          <span className="text-sm text-gray-600 dark:text-gray-300">Cross-chain</span>
+          <span className="text-sm text-gray-600">Cross-chain</span>
         </div>
       </div>
     </TopNavbarWrapper>
