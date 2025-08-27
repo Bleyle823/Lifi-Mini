@@ -74,7 +74,7 @@ export const FloatingNav = ({
 
         {/* Navigation Items - Center */}
         <div className="flex items-center space-x-6">
-          {navItems.map((navItem: any, idx: number) => (
+          {navItems.map((navItem, idx: number) => (
             <a
               key={`link=${idx}`}
               href={navItem.link}
