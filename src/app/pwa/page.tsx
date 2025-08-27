@@ -6,10 +6,10 @@ import { WidgetEvents } from "@/components/WidgetEvents";
 
 export default function HomePage() {
   return (
-    <PwaSafeArea {...{ topNavHeight: "58px", bottomNavHeight }}>
+    <PwaSafeArea {...{ topNavHeight: "52px", bottomNavHeight }}>
       <FloatingNav />
       <WidgetEvents />
-      <main className="flex-1 px-4 pt-2 pb-4">
+      <main className="flex-1 px-4 pt-1 pb-4">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-2xl font-bold mb-6 text-center">LiFi Bridge</h1>
           <Widget />

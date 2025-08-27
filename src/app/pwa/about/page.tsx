@@ -4,9 +4,9 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <PwaSafeArea {...{ topNavHeight: "58px" }}>
+    <PwaSafeArea {...{ topNavHeight: "52px" }}>
       <FloatingNav />
-      <main className="flex gap-4 pt-2">
+      <main className="flex gap-4 pt-1">
         About
         <Link href="/pwa">Go Home</Link>
       </main>
