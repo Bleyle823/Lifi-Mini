@@ -17,10 +17,10 @@ export const FloatingNav = ({
 }) => {
   return (
     <motion.div
-      className={cn(
-        "flex max-w-4xl fixed top-6 inset-x-0 mx-auto border border-white/20 dark:border-white/10 rounded-2xl dark:bg-black/20 bg-white/20 backdrop-blur-md shadow-2xl z-[5000] px-8 py-4 items-center justify-between",
-        className
-      )}
+              className={cn(
+          "flex max-w-3xl fixed top-6 inset-x-0 mx-auto border border-white/20 dark:border-white/10 rounded-2xl dark:bg-black/20 bg-white/20 backdrop-blur-md shadow-2xl z-[5000] px-8 py-4 items-center justify-between",
+          className
+        )}
     >
         {/* LiFi Logo - Far Left */}
         <div className="flex items-center space-x-3">
