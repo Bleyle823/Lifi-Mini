@@ -442,7 +442,9 @@ const PillNav: React.FC<PillNavProps> = ({
         }}
       >
         <ul className="list-none m-0 p-[3px] flex flex-col gap-[3px]">
-          {items.map((item) => {
+          {items
+            .filter((item) => /github|twitter/i.test(item.label))
+            .map((item) => {
             const defaultStyle: React.CSSProperties = {
               background: "var(--pill-bg, #fff)",
               color: "var(--pill-text, #fff)",
