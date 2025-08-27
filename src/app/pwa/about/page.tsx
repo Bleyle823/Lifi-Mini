@@ -1,11 +1,11 @@
 import { PwaSafeArea } from "@/app/pwa/components/safe-area";
-import { PwaTopNavbar, topNavHeight } from "@/app/pwa/components/top-navbar";
+import { FloatingNav } from "@/components/ui/floating-navbar";
 import Link from "next/link";
 
 export default function Page() {
   return (
-    <PwaSafeArea {...{ topNavHeight }}>
-      <PwaTopNavbar />
+    <PwaSafeArea {...{ topNavHeight: "calc(6rem + 1px)" }}>
+      <FloatingNav />
       <main className="flex gap-4">
         About
         <Link href="/pwa">Go Home</Link>

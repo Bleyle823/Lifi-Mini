@@ -1,53 +1,522 @@
 "use client";
-import React from "react";
-import { motion } from "motion/react";
-import { cn } from "@/lib/utils";
+import React, { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
+import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
-export const FloatingNav = ({
-  className,
-}: {
+export type PillNavItem = {
+  label: string;
+  href: string;
+  ariaLabel?: string;
+};
+
+export interface PillNavProps {
+  logo: string;
+  logoAlt?: string;
+  items: PillNavItem[];
+  activeHref?: string;
   className?: string;
+  ease?: string;
+  baseColor?: string;
+  pillColor?: string;
+  hoveredPillTextColor?: string;
+  pillTextColor?: string;
+  onMobileMenuClick?: () => void;
+  initialLoadAnimation?: boolean;
+}
+
+const PillNav: React.FC<PillNavProps> = ({
+  logo,
+  logoAlt = "Logo",
+  items,
+  activeHref,
+  className = "",
+  ease = "power3.easeOut",
+  baseColor = "#fff",
+  pillColor = "#060010",
+  hoveredPillTextColor = "#060010",
+  pillTextColor,
+  onMobileMenuClick,
+  initialLoadAnimation = true,
 }) => {
+  const resolvedPillTextColor = pillTextColor ?? baseColor;
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const circleRefs = useRef<Array<HTMLSpanElement | null>>([]);
+  const tlRefs = useRef<Array<gsap.core.Timeline | null>>([]);
+  const activeTweenRefs = useRef<Array<gsap.core.Tween | null>>([]);
+  const logoImgRef = useRef<HTMLImageElement | null>(null);
+  const logoTweenRef = useRef<gsap.core.Tween | null>(null);
+  const hamburgerRef = useRef<HTMLButtonElement | null>(null);
+  const mobileMenuRef = useRef<HTMLDivElement | null>(null);
+  const navItemsRef = useRef<HTMLDivElement | null>(null);
+  const logoRef = useRef<HTMLAnchorElement | HTMLElement | null>(null);
+
+  useEffect(() => {
+    const layout = () => {
+      circleRefs.current.forEach((circle) => {
+        if (!circle?.parentElement) return;
+
+        const pill = circle.parentElement;
+        const rect = pill.getBoundingClientRect();
+        const { width: w, height: h } = rect;
+        const R = ((w * w) / 4 + h * h) / (2 * h);
+        const D = Math.ceil(2 * R) + 2;
+        const delta =
+          Math.ceil(R - Math.sqrt(Math.max(0, R * R - (w * w) / 4))) + 1;
+        const originY = D - delta;
+
+        circle.style.width = `${D}px`;
+        circle.style.height = `${D}px`;
+        circle.style.bottom = `-${delta}px`;
+
+        gsap.set(circle, {
+          xPercent: -50,
+          scale: 0,
+          transformOrigin: `50% ${originY}px`,
+        });
+
+        const label = pill.querySelector<HTMLElement>(".pill-label");
+        const white = pill.querySelector<HTMLElement>(".pill-label-hover");
+
+        if (label) gsap.set(label, { y: 0 });
+        if (white) gsap.set(white, { y: h + 12, opacity: 0 });
+
+        const index = circleRefs.current.indexOf(circle);
+        if (index === -1) return;
+
+        tlRefs.current[index]?.kill();
+        const tl = gsap.timeline({ paused: true });
+
+        tl.to(
+          circle,
+          { scale: 1.2, xPercent: -50, duration: 2, ease, overwrite: "auto" },
+          0
+        );
+
+        if (label) {
+          tl.to(
+            label,
+            { y: -(h + 8), duration: 2, ease, overwrite: "auto" },
+            0
+          );
+        }
+
+        if (white) {
+          gsap.set(white, { y: Math.ceil(h + 100), opacity: 0 });
+          tl.to(
+            white,
+            { y: 0, opacity: 1, duration: 2, ease, overwrite: "auto" },
+            0
+          );
+        }
+
+        tlRefs.current[index] = tl;
+      });
+    };
+
+    layout();
+
+    const onResize = () => layout();
+    window.addEventListener("resize", onResize);
+
+    if (document.fonts) {
+      document.fonts.ready.then(layout).catch(() => undefined);
+    }
+
+    const menu = mobileMenuRef.current;
+    if (menu) {
+      gsap.set(menu, { visibility: "hidden", opacity: 0, scaleY: 1, y: 0 });
+    }
+
+    if (initialLoadAnimation) {
+      const logo = logoRef.current;
+      const navItems = navItemsRef.current;
+
+      if (logo) {
+        gsap.set(logo, { scale: 0 });
+        gsap.to(logo, {
+          scale: 1,
+          duration: 0.6,
+          ease,
+        });
+      }
+
+      if (navItems) {
+        gsap.set(navItems, { width: 0, overflow: "hidden" });
+        gsap.to(navItems, {
+          width: "auto",
+          duration: 0.6,
+          ease,
+        });
+      }
+    }
+
+    return () => window.removeEventListener("resize", onResize);
+  }, [items, ease, initialLoadAnimation]);
+
+  const handleEnter = (i: number) => {
+    const tl = tlRefs.current[i];
+    if (!tl) return;
+    activeTweenRefs.current[i]?.kill();
+    activeTweenRefs.current[i] = tl.tweenTo(tl.duration(), {
+      duration: 0.3,
+      ease,
+      overwrite: "auto",
+    });
+  };
+
+  const handleLeave = (i: number) => {
+    const tl = tlRefs.current[i];
+    if (!tl) return;
+    activeTweenRefs.current[i]?.kill();
+    activeTweenRefs.current[i] = tl.tweenTo(0, {
+      duration: 0.2,
+      ease,
+      overwrite: "auto",
+    });
+  };
+
+  const handleLogoEnter = () => {
+    const img = logoImgRef.current;
+    if (!img) return;
+    logoTweenRef.current?.kill();
+    gsap.set(img, { rotate: 0 });
+    logoTweenRef.current = gsap.to(img, {
+      rotate: 360,
+      duration: 0.2,
+      ease,
+      overwrite: "auto",
+    });
+  };
+
+  const toggleMobileMenu = () => {
+    const newState = !isMobileMenuOpen;
+    setIsMobileMenuOpen(newState);
+
+    const hamburger = hamburgerRef.current;
+    const menu = mobileMenuRef.current;
+
+    if (hamburger) {
+      const lines = hamburger.querySelectorAll(".hamburger-line");
+      if (lines.length >= 2) {
+        const line1 = lines[0]!;
+        const line2 = lines[1]!;
+        if (newState) {
+          gsap.to(line1, { rotation: 45, y: 3, duration: 0.3, ease });
+          gsap.to(line2, { rotation: -45, y: -3, duration: 0.3, ease });
+        } else {
+          gsap.to(line1, { rotation: 0, y: 0, duration: 0.3, ease });
+          gsap.to(line2, { rotation: 0, y: 0, duration: 0.3, ease });
+        }
+      }
+    }
+
+    if (menu) {
+      if (newState) {
+        gsap.set(menu, { visibility: "visible" });
+        gsap.fromTo(
+          menu,
+          { opacity: 0, y: 10, scaleY: 1 },
+          {
+            opacity: 1,
+            y: 0,
+            scaleY: 1,
+            duration: 0.3,
+            ease,
+            transformOrigin: "top center",
+          }
+        );
+      } else {
+        gsap.to(menu, {
+          opacity: 0,
+          y: 10,
+          scaleY: 1,
+          duration: 0.2,
+          ease,
+          transformOrigin: "top center",
+          onComplete: () => {
+            gsap.set(menu, { visibility: "hidden" });
+          },
+        });
+      }
+    }
+
+    onMobileMenuClick?.();
+  };
+
+  const isExternalLink = (href: string) =>
+    href.startsWith("http://") ||
+    href.startsWith("https://") ||
+    href.startsWith("//") ||
+    href.startsWith("mailto:") ||
+    href.startsWith("tel:") ||
+    href.startsWith("#");
+
+  const cssVars = {
+    ["--base"]: baseColor,
+    ["--pill-bg"]: pillColor,
+    ["--hover-text"]: hoveredPillTextColor,
+    ["--pill-text"]: resolvedPillTextColor,
+    ["--nav-h"]: "42px",
+    ["--logo"]: "36px",
+    ["--pill-pad-x"]: "18px",
+    ["--pill-gap"]: "3px",
+  } as React.CSSProperties;
+
   return (
-    <motion.div
-              className={cn(
-          "flex max-w-3xl fixed top-6 inset-x-0 mx-auto border border-white/30 dark:border-white/20 rounded-2xl dark:bg-black/30 bg-white/30 backdrop-blur-xl shadow-2xl z-[5000] px-8 py-4 items-center justify-between",
-          className
-        )}
-    >
-        {/* LiFi Logo - Far Left */}
-        <div className="flex items-center space-x-3">
-          <Image
-            src="/lifi-icon-1024x1024.png"
-            alt="LiFi Logo"
-            width={32}
-            height={32}
-            className="w-8 h-8"
-          />
-          <span className="text-lg font-semibold text-neutral-800 dark:text-white hidden sm:block">
-            LiFi Bridge
-          </span>
+    <div className="absolute top-[1em] z-[1000] w-full left-0 md:w-auto md:left-auto">
+      <nav
+        className={`w-full md:w-max flex items-center justify-between md:justify-start box-border px-4 md:px-0 ${className}`}
+        aria-label="Primary"
+        style={cssVars}
+      >
+        {(() => {
+          const href = items?.[0]?.href ?? "#";
+          const content = (
+            <>
+              <Image
+                src={logo}
+                alt={logoAlt}
+                ref={logoImgRef}
+                width={36}
+                height={36}
+                className="w-full h-full object-cover block"
+              />
+            </>
+          );
+          const commonProps = {
+            onMouseEnter: handleLogoEnter,
+            ref: (el: HTMLAnchorElement | null) => {
+              logoRef.current = el;
+            },
+            className:
+              "rounded-full p-2 inline-flex items-center justify-center overflow-hidden",
+            style: {
+              width: "var(--nav-h)",
+              height: "var(--nav-h)",
+              background: "var(--base, #000)",
+            },
+          };
+          const isExternal = isExternalLink(href);
+          return isExternal ? (
+            <a href={href} aria-label="Home" {...commonProps}>
+              {content}
+            </a>
+          ) : (
+            <Link href={href} aria-label="Home" {...commonProps}>
+              {content}
+            </Link>
+          );
+        })()}
+
+        <div
+          ref={navItemsRef}
+          className="relative items-center rounded-full hidden md:flex ml-2"
+          style={{
+            height: "var(--nav-h)",
+            background: "var(--base, #000)",
+          }}
+        >
+          <ul
+            role="menubar"
+            className="list-none flex items-stretch m-0 p-[3px] h-full"
+            style={{ gap: "var(--pill-gap)" }}
+          >
+            {items.map((item, i) => {
+              const isActive = activeHref === item.href;
+
+              const pillStyle: React.CSSProperties = {
+                background: "var(--pill-bg, #fff)",
+                color: "var(--pill-text, var(--base, #000))",
+                paddingLeft: "var(--pill-pad-x)",
+                paddingRight: "var(--pill-pad-x)",
+              };
+
+              const PillContent = (
+                <>
+                  <span
+                    className="hover-circle absolute left-1/2 bottom-0 rounded-full z-[1] block pointer-events-none"
+                    style={{
+                      background: "var(--base, #000)",
+                      willChange: "transform",
+                    }}
+                    aria-hidden="true"
+                    ref={(el) => {
+                      circleRefs.current[i] = el;
+                    }}
+                  />
+                  <span className="label-stack relative inline-block leading-[1] z-[2]">
+                    <span
+                      className="pill-label relative z-[2] inline-block leading-[1]"
+                      style={{ willChange: "transform" }}
+                    >
+                      {item.label}
+                    </span>
+                    <span
+                      className="pill-label-hover absolute left-0 top-0 z-[3] inline-block"
+                      style={{
+                        color: "var(--hover-text, #fff)",
+                        willChange: "transform, opacity",
+                      }}
+                      aria-hidden="true"
+                    >
+                      {item.label}
+                    </span>
+                  </span>
+                  {isActive && (
+                    <span
+                      className="absolute left-1/2 -bottom-[6px] -translate-x-1/2 w-3 h-3 rounded-full z-[4]"
+                      style={{ background: "var(--base, #000)" }}
+                      aria-hidden="true"
+                    />
+                  )}
+                </>
+              );
+
+              const basePillClasses =
+                "relative overflow-hidden inline-flex items-center justify-center h-full no-underline rounded-full box-border font-semibold text-[16px] leading-[0] uppercase tracking-[0.2px] whitespace-nowrap cursor-pointer px-0";
+
+              return (
+                <li key={item.href} role="none" className="flex h-full">
+                  {isExternalLink(item.href) ? (
+                    <a
+                      role="menuitem"
+                      href={item.href}
+                      className={basePillClasses}
+                      style={pillStyle}
+                      aria-label={item.ariaLabel ?? item.label}
+                      onMouseEnter={() => handleEnter(i)}
+                      onMouseLeave={() => handleLeave(i)}
+                    >
+                      {PillContent}
+                    </a>
+                  ) : (
+                    <Link
+                      role="menuitem"
+                      href={item.href}
+                      className={basePillClasses}
+                      style={pillStyle}
+                      aria-label={item.ariaLabel ?? item.label}
+                      onMouseEnter={() => handleEnter(i)}
+                      onMouseLeave={() => handleLeave(i)}
+                    >
+                      {PillContent}
+                    </Link>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         </div>
 
-        {/* GitHub Icon - Far Right */}
-        <a
-          href="https://github.com/lifinance"
-          className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 dark:bg-black/10 backdrop-blur-sm border border-white/30 dark:border-white/20 hover:bg-white/20 dark:hover:bg-black/20 transition-all duration-200"
+        <button
+          ref={hamburgerRef}
+          onClick={toggleMobileMenu}
+          aria-label="Toggle menu"
+          aria-expanded={isMobileMenuOpen}
+          className="md:hidden rounded-full border-0 flex flex-col items-center justify-center gap-1 cursor-pointer p-0 relative"
+          style={{
+            width: "var(--nav-h)",
+            height: "var(--nav-h)",
+            background: "var(--base, #000)",
+          }}
         >
-          <svg
-            className="w-5 h-5 text-neutral-700 dark:text-neutral-300"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 22 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </a>
-      </motion.div>
+          <span
+            className="hamburger-line w-4 h-0.5 rounded origin-center transition-all duration-[10ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]"
+            style={{ background: "var(--pill-bg, #fff)" }}
+          />
+          <span
+            className="hamburger-line w-4 h-0.5 rounded origin-center transition-all duration-[10ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]"
+            style={{ background: "var(--pill-bg, #fff)" }}
+          />
+        </button>
+      </nav>
+
+      <div
+        ref={mobileMenuRef}
+        className="md:hidden absolute top-[3em] left-4 right-4 rounded-[27px] shadow-[0_8px_32px_rgba(0,0,0,0.12)] z-[998] origin-top"
+        style={{
+          ...cssVars,
+          background: "var(--base, #f0f0f0)",
+        }}
+      >
+        <ul className="list-none m-0 p-[3px] flex flex-col gap-[3px]">
+          {items.map((item) => {
+            const defaultStyle: React.CSSProperties = {
+              background: "var(--pill-bg, #fff)",
+              color: "var(--pill-text, #fff)",
+            };
+            const hoverIn = (e: React.MouseEvent<HTMLAnchorElement>) => {
+              e.currentTarget.style.background = "var(--base)";
+              e.currentTarget.style.color = "var(--hover-text, #fff)";
+            };
+            const hoverOut = (e: React.MouseEvent<HTMLAnchorElement>) => {
+              e.currentTarget.style.background = "var(--pill-bg, #fff)";
+              e.currentTarget.style.color = "var(--pill-text, #fff)";
+            };
+
+            const linkClasses =
+              "block py-3 px-4 text-[16px] font-medium rounded-[50px] transition-all duration-200 ease-[cubic-bezier(0.25,0.1,0.25,1)]";
+
+            return (
+              <li key={item.href}>
+                {isExternalLink(item.href) ? (
+                  <a
+                    href={item.href}
+                    className={linkClasses}
+                    style={defaultStyle}
+                    onMouseEnter={hoverIn}
+                    onMouseLeave={hoverOut}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    href={item.href}
+                    className={linkClasses}
+                    style={defaultStyle}
+                    onMouseEnter={hoverIn}
+                    onMouseLeave={hoverOut}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
   );
 };
+
+export default PillNav;
+
+export function FloatingNav() {
+  const pathname = usePathname();
+  const items: PillNavItem[] = [
+    { label: "Home", href: "/farcaster" },
+    { label: "Products", href: "/farcaster/about" },
+    { label: "Components", href: "/farcaster/profile" },
+    { label: "LiFi Bridge", href: "/" },
+    { label: "Changelog", href: "#" },
+    { label: "Twitter", href: "#" },
+    { label: "GitHub", href: "#" },
+  ];
+
+  return (
+    <PillNav
+      logo="/lifi-icon-1024x1024.png"
+      logoAlt="Lifi Logo"
+      items={items}
+      activeHref={pathname ?? undefined}
+      baseColor="#ffffff"
+      pillColor="#060010"
+      hoveredPillTextColor="#060010"
+      initialLoadAnimation={true}
+    />
+  );
+}

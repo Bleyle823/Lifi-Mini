@@ -1,16 +1,13 @@
-import {
-  PwaBottomNavbar,
-  bottomNavHeight,
-} from "@/app/pwa/components/bottom-navbar";
+import { PwaBottomNavbar, bottomNavHeight } from "@/app/pwa/components/bottom-navbar";
 import { PwaSafeArea } from "@/app/pwa/components/safe-area";
-import { PwaTopNavbar, topNavHeight } from "@/app/pwa/components/top-navbar";
+import { FloatingNav } from "@/components/ui/floating-navbar";
 import { Widget } from "@/components/Widget";
 import { WidgetEvents } from "@/components/WidgetEvents";
 
 export default function HomePage() {
   return (
-    <PwaSafeArea {...{ topNavHeight, bottomNavHeight }}>
-      <PwaTopNavbar />
+    <PwaSafeArea {...{ topNavHeight: "calc(6rem + 1px)", bottomNavHeight }}>
+      <FloatingNav />
       <WidgetEvents />
       <main className="flex-1 p-4">
         <div className="max-w-4xl mx-auto">
