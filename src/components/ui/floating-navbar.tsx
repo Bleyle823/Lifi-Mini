@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export type PillNavItem = {
@@ -56,7 +57,7 @@ const PillNav: React.FC<PillNavProps> = ({
       circleRefs.current.forEach((circle) => {
         if (!circle?.parentElement) return;
 
-        const pill = circle.parentElement as HTMLElement;
+        const pill = circle.parentElement!;
         const rect = pill.getBoundingClientRect();
         const { width: w, height: h } = rect;
         const R = ((w * w) / 4 + h * h) / (2 * h);
@@ -120,7 +121,7 @@ const PillNav: React.FC<PillNavProps> = ({
     window.addEventListener("resize", onResize);
 
     if (document.fonts) {
-      document.fonts.ready.then(layout).catch(() => {});
+      document.fonts.ready.then(layout).catch(() => undefined);
     }
 
     const menu = mobileMenuRef.current;
@@ -199,8 +200,8 @@ const PillNav: React.FC<PillNavProps> = ({
     if (hamburger) {
       const lines = hamburger.querySelectorAll(".hamburger-line");
       if (lines.length >= 2) {
-        const line1 = lines[0] as Element;
-        const line2 = lines[1] as Element;
+        const line1 = lines[0]!;
+        const line2 = lines[1]!;
         if (newState) {
           gsap.to(line1, { rotation: 45, y: 3, duration: 0.3, ease });
           gsap.to(line2, { rotation: -45, y: -3, duration: 0.3, ease });
@@ -271,13 +272,15 @@ const PillNav: React.FC<PillNavProps> = ({
         style={cssVars}
       >
         {(() => {
-          const href = items?.[0]?.href || "#";
+          const href = items?.[0]?.href ?? "#";
           const content = (
             <>
-              <img
+              <Image
                 src={logo}
                 alt={logoAlt}
                 ref={logoImgRef}
+                width={36}
+                height={36}
                 className="w-full h-full object-cover block"
               />
             </>
@@ -382,7 +385,7 @@ const PillNav: React.FC<PillNavProps> = ({
                       href={item.href}
                       className={basePillClasses}
                       style={pillStyle}
-                      aria-label={item.ariaLabel || item.label}
+                      aria-label={item.ariaLabel ?? item.label}
                       onMouseEnter={() => handleEnter(i)}
                       onMouseLeave={() => handleLeave(i)}
                     >
@@ -394,7 +397,7 @@ const PillNav: React.FC<PillNavProps> = ({
                       href={item.href}
                       className={basePillClasses}
                       style={pillStyle}
-                      aria-label={item.ariaLabel || item.label}
+                      aria-label={item.ariaLabel ?? item.label}
                       onMouseEnter={() => handleEnter(i)}
                       onMouseLeave={() => handleLeave(i)}
                     >
@@ -509,7 +512,7 @@ export function FloatingNav() {
       logo="/lifi-icon-1024x1024.png"
       logoAlt="Lifi Logo"
       items={items}
-      activeHref={pathname || undefined}
+      activeHref={pathname ?? undefined}
       baseColor="#ffffff"
       pillColor="#060010"
       hoveredPillTextColor="#060010"
