@@ -16,7 +16,7 @@ export const FloatingNav = ({
   navItems: {
     name: string;
     link: string;
-    icon?: JSX.Element;
+    icon?: React.ReactNode;
   }[];
   className?: string;
 }) => {
@@ -25,7 +25,7 @@ export const FloatingNav = ({
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
     if (typeof current === "number") {
-      let direction = current! - scrollYProgress.getPrevious()!;
+      const direction = current - scrollYProgress.getPrevious()!;
 
       if (scrollYProgress.get() < 0.05) {
         setVisible(false);
@@ -74,7 +74,7 @@ export const FloatingNav = ({
 
         {/* Navigation Items - Center */}
         <div className="flex items-center space-x-6">
-          {navItems.map((navItem: any, idx: number) => (
+          {navItems.map((navItem, idx: number) => (
             <a
               key={`link=${idx}`}
               href={navItem.link}
