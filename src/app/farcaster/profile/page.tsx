@@ -1,6 +1,5 @@
 import { SafeArea } from "@/app/farcaster/components/safe-area";
 import { FloatingNav } from "@/components/ui/floating-navbar";
-import { IconHome, IconExchange, IconTerminal2, IconNewSection, IconBrandGithub, IconBrandX } from "@tabler/icons-react";
 import Link from "next/link";
 
 export default function Page() {
