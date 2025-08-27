@@ -55,7 +55,7 @@ const PillNav: React.FC<PillNavProps> = ({
   useEffect(() => {
     const layout = () => {
       circleRefs.current.forEach((circle) => {
-        if (!circle || !circle.parentElement) return;
+        if (!circle?.parentElement) return;
 
         const pill = circle.parentElement;
         const rect = pill.getBoundingClientRect();
