@@ -12,10 +12,10 @@ export default function HomePage() {
 
 
   return (
-    <SafeArea {...{ topNavHeight: "calc(6rem + 1px)", bottomNavHeight }}>
+    <SafeArea {...{ topNavHeight: "58px", bottomNavHeight }}>
       <FloatingNav />
       <main className="flex-1 overflow-auto">
-        <div className="container mx-auto px-4 py-6">
+        <div className="container mx-auto px-4 pt-2 pb-6">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center justify-center gap-3 mb-4">
               {/* <Image
