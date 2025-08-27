@@ -1,9 +1,11 @@
 import { Widget } from "@/components/Widget";
 import { WidgetEvents } from "@/components/WidgetEvents";
+import FloatingNavDemo from "@/components/floating-navbar-demo";
 
 export default function IndexPage() {
   return (
     <div className="min-h-screen bg-gray-50">
+      <FloatingNavDemo />
       <WidgetEvents />
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
