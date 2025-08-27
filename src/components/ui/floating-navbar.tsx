@@ -55,9 +55,9 @@ const PillNav: React.FC<PillNavProps> = ({
   useEffect(() => {
     const layout = () => {
       circleRefs.current.forEach((circle) => {
-        if (!circle?.parentElement) return;
+        if (!circle || !circle.parentElement) return;
 
-        const pill = circle.parentElement!;
+        const pill = circle.parentElement;
         const rect = pill.getBoundingClientRect();
         const { width: w, height: h } = rect;
         const R = ((w * w) / 4 + h * h) / (2 * h);
@@ -296,7 +296,7 @@ const PillNav: React.FC<PillNavProps> = ({
               width: "var(--nav-h)",
               height: "var(--nav-h)",
               background: "var(--base, #000)",
-            } as React.CSSProperties,
+            },
           };
           const isExternal = isExternalLink(href);
           return isExternal ? (
