@@ -4,38 +4,7 @@ import { IconHome, IconExchange, IconTerminal2, IconNewSection, IconBrandGithub,
 import Link from "next/link";
 
 export default function Page() {
-  const navItems = [
-    {
-      name: "Home",
-      link: "/farcaster",
-      icon: <IconHome className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    },
-    {
-      name: "Bridge",
-      link: "/farcaster/about",
-      icon: <IconExchange className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    },
-    {
-      name: "Products",
-      link: "/farcaster/profile",
-      icon: <IconTerminal2 className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    },
-    {
-      name: "Components",
-      link: "/farcaster/settings",
-      icon: <IconNewSection className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    },
-    {
-      name: "GitHub",
-      link: "https://github.com/lifinance",
-      icon: <IconBrandGithub className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    },
-    {
-      name: "Twitter",
-      link: "https://twitter.com/lifiprotocol",
-      icon: <IconBrandX className="h-4 w-4 text-neutral-500 dark:text-white" />,
-    },
-  ];
+
 
   return (
     <SafeArea {...{ topNavHeight: "calc(6rem + 1px)" }}>
