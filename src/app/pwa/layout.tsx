@@ -1,5 +1,7 @@
 import { PwaProviders } from "@/app/pwa/providers";
 import "@/styles/globals.css";
+import "@/styles/theme.css";
+import "@coinbase/onchainkit/styles.css";
 
 import { type Metadata, type Viewport } from "next";
 

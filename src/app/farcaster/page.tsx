@@ -44,11 +44,17 @@ export default function HomePage() {
             <WidgetEvents />
             <Widget />
             
-            {/* Fallback content if widget fails */}
+            {/* Demo page link */}
             <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg text-center">
-              <p className="text-gray-600">
+              <p className="text-gray-600 mb-3">
                 If the LiFi Widget doesn&apos;t appear above, please refresh the page or check your connection.
               </p>
+              <a 
+                href="/demo" 
+                className="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Try OnchainKit Demo
+              </a>
             </div>
           </div>
         </div>

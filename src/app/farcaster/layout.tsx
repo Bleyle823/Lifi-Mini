@@ -1,6 +1,8 @@
 import { FarcasterProviders } from "@/app/farcaster/providers";
 import { getBaseUrl } from "@/lib/constants";
 import "@/styles/globals.css";
+import "@/styles/theme.css";
+import "@coinbase/onchainkit/styles.css";
 
 import { type Metadata, type Viewport } from "next";
 
