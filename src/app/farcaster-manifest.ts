@@ -2,7 +2,11 @@ import { getBaseUrl } from "@/lib/constants";
 import { type domainManifestSchema } from "@farcaster/frame-sdk";
 import { type z } from "zod";
 
-type Manifest = z.input<typeof domainManifestSchema>;
+type Manifest = z.input<typeof domainManifestSchema> & {
+  baseBuilder?: {
+    allowedAddresses: string[];
+  };
+};
 
 const appUrl = getBaseUrl();
 
@@ -13,6 +17,11 @@ export const farcasterManifest: Manifest = {
     header: "eyJmaWQiOjY3NDc5MiwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDdENjI4NDE4NjEyNzU0OWUxODgzRjMwMUM0MjU5MTBGMzYxOUUyNTQifQ",
     payload: "eyJkb21haW4iOiJsaWZpLW1pbmkudmVyY2VsLmFwcCJ9",
     signature: "MHhhYjZkODUwOTQ5NDYxN2Y2ZTA5ZTdlNDYzZGRjMGFmNjczMTllYjYxNTdmODA5MzI1ZjdjNjljMzVhOWY5ZmEyMWM5ZjkyNDhhODk0NTUzMzMzMTEyNTUzMzg3YjA1NzI1Mzk0NmJkMGNhNjA4YjFhODhkNDQ2N2UzNjI2NDFkYzFj"
+  },
+  baseBuilder: {
+    allowedAddresses: [
+      "0x662AE3664Cb961DEb5f94bBA2FDC06c138A6D887",
+    ],
   },
   frame: {
     version: "1",
