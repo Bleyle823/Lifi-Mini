@@ -12,6 +12,9 @@
     "description": "Bridge tokens across multiple blockchains with LiFi's advanced routing technology. Fast, secure, and cost-effective cross-chain transfers.",
     "primaryCategory": "finance"
   },
+  "baseBuilder": {
+    "allowedAddresses": ["0x662AE3664Cb961DEb5f94bBA2FDC06c138A6D887"]
+  },
   "accountAssociation": {
     "header": "eyJmaWQiOjI5MjE5NCwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDcyNTU0QTIyNEI0Qjc1Njk2OTdBYWQ1ZUE1YmQ1NzM5ZDAxQzliYzMifQ",
     "payload": "eyJkb21haW4iOiJ0ZW1wbGF0ZS5nYWlhcy54eXoifQ",

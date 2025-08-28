@@ -2,7 +2,11 @@ import { getBaseUrl } from "@/lib/constants";
 import { type domainManifestSchema } from "@farcaster/frame-sdk";
 import { type z } from "zod";
 
-type Manifest = z.input<typeof domainManifestSchema>;
+type Manifest = z.input<typeof domainManifestSchema> & {
+  baseBuilder?: {
+    allowedAddresses: string[];
+  };
+};
 
 const appUrl = getBaseUrl();
 
@@ -60,6 +64,9 @@ export const farcasterManifest: Manifest = {
     ],
     // castShareUrl
   },
+  baseBuilder: {
+    allowedAddresses: ["0x662AE3664Cb961DEb5f94bBA2FDC06c138A6D887"]
+  }
 };
 
 
