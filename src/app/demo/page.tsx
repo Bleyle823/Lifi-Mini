@@ -1,31 +1,92 @@
 "use client";
 
-import {
-  useMiniKit,
-  useAddFrame,
-  useOpenUrl,
-} from "@coinbase/onchainkit/minikit";
-import {
-  Name,
-  Identity,
-  Address,
-  Avatar,
-  EthBalance,
-} from "@coinbase/onchainkit/identity";
-import {
-  ConnectWallet,
-  Wallet,
-  WalletDropdown,
-  WalletDropdownDisconnect,
-} from "@coinbase/onchainkit/wallet";
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { Button } from "@/components/DemoComponents";
 import { Icon } from "@/components/DemoComponents";
 import { Home } from "@/components/DemoComponents";
 import { Features } from "@/components/DemoComponents";
 import { Widget } from "@/components/Widget";
+import { ClientOnly } from "@/components/ClientOnly";
 
-export default function DemoPage() {
+function DemoPageContent() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <div className="flex justify-center items-center min-h-screen">Loading...</div>;
+  }
+
+  return <DemoPageInner />;
+}
+
+function DemoPageInner() {
+  // Dynamic imports to avoid SSR issues
+  const [MiniKitComponents, setMiniKitComponents] = useState<any>(null);
+
+  useEffect(() => {
+    const loadComponents = async () => {
+      try {
+        const { useMiniKit, useAddFrame, useOpenUrl } = await import("@coinbase/onchainkit/minikit");
+        const {
+          Name,
+          Identity,
+          Address,
+          Avatar,
+          EthBalance,
+        } = await import("@coinbase/onchainkit/identity");
+        const {
+          ConnectWallet,
+          Wallet,
+          WalletDropdown,
+          WalletDropdownDisconnect,
+        } = await import("@coinbase/onchainkit/wallet");
+
+        setMiniKitComponents({
+          useMiniKit,
+          useAddFrame,
+          useOpenUrl,
+          Name,
+          Identity,
+          Address,
+          Avatar,
+          EthBalance,
+          ConnectWallet,
+          Wallet,
+          WalletDropdown,
+          WalletDropdownDisconnect,
+        });
+      } catch (error) {
+        console.error("Failed to load MiniKit components:", error);
+      }
+    };
+
+    loadComponents();
+  }, []);
+
+  if (!MiniKitComponents) {
+    return <div className="flex justify-center items-center min-h-screen">Loading MiniKit...</div>;
+  }
+
+  return <DemoPageCore {...MiniKitComponents} />;
+}
+
+function DemoPageCore({
+  useMiniKit,
+  useAddFrame,
+  useOpenUrl,
+  Name,
+  Identity,
+  Address,
+  Avatar,
+  EthBalance,
+  ConnectWallet,
+  Wallet,
+  WalletDropdown,
+  WalletDropdownDisconnect,
+}: any) {
   const { setFrameReady, isFrameReady, context } = useMiniKit();
   const [frameAdded, setFrameAdded] = useState(false);
   const [activeTab, setActiveTab] = useState("home");
@@ -154,5 +215,13 @@ export default function DemoPage() {
         </footer>
       </div>
     </div>
+  );
+}
+
+export default function DemoPage() {
+  return (
+    <ClientOnly fallback={<div className="flex justify-center items-center min-h-screen">Loading...</div>}>
+      <DemoPageContent />
+    </ClientOnly>
   );
 }

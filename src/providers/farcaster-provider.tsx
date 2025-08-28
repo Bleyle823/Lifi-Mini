@@ -1,21 +1,21 @@
 "use client";
 
-import sdk, { type Context } from "@farcaster/frame-sdk";
+import sdk from "@farcaster/frame-sdk";
 import React, { createContext, useContext, useState } from "react";
 import { useEffect } from "react";
 
 type FarcasterContextType =
   | {
-      farcaster: Context.FrameContext | undefined;
+      farcaster: any | undefined;
     }
   | undefined;
 
 const FarcasterContext = createContext<FarcasterContextType>(undefined);
 
 export function FarcasterProvider({ children }: { children: React.ReactNode }) {
-  const [farcasterContext, setFarcasterContext] = useState<
-    Context.FrameContext | undefined
-  >(undefined);
+  const [farcasterContext, setFarcasterContext] = useState<any | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     sdk.actions

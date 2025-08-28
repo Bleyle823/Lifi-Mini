@@ -9,12 +9,11 @@ import {
   TransactionToastAction,
   TransactionToastIcon,
   TransactionToastLabel,
-  TransactionError,
-  TransactionResponse,
   TransactionStatusAction,
   TransactionStatusLabel,
   TransactionStatus,
 } from "@coinbase/onchainkit/transaction";
+import type { TransactionError, TransactionResponse } from "@coinbase/onchainkit/transaction";
 import { useNotification } from "@coinbase/onchainkit/minikit";
 
 type ButtonProps = {
@@ -404,14 +403,16 @@ function TransactionCard() {
   const sendNotification = useNotification();
 
   const handleSuccess = useCallback(async (response: TransactionResponse) => {
-    const transactionHash = response.transactionReceipts[0].transactionHash;
+    const transactionHash = response.transactionReceipts?.[0]?.transactionHash;
 
     console.log(`Transaction successful: ${transactionHash}`);
 
-    await sendNotification({
-      title: "Congratulations!",
-      body: `You sent your a transaction, ${transactionHash}!`,
-    });
+    if (transactionHash) {
+      await sendNotification({
+        title: "Congratulations!",
+        body: `You sent a transaction, ${transactionHash}!`,
+      });
+    }
   }, [sendNotification]);
 
   return (
