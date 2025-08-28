@@ -23,6 +23,7 @@ export async function GET() {
   return NextResponse.json(manifest, {
     headers: {
       "Cache-Control": "no-store, max-age=0",
+      "Content-Type": "application/json; charset=utf-8",
     },
   });
 }
